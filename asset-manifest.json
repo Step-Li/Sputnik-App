@@ -1,18 +1,18 @@
 {
   "files": {
-    "main.css": "/Sputnik-App/static/css/main.981f7211.chunk.css",
-    "main.js": "/Sputnik-App/static/js/main.b052bcc3.chunk.js",
-    "main.js.map": "/Sputnik-App/static/js/main.b052bcc3.chunk.js.map",
-    "runtime-main.js": "/Sputnik-App/static/js/runtime-main.8cbf0ab2.js",
-    "runtime-main.js.map": "/Sputnik-App/static/js/runtime-main.8cbf0ab2.js.map",
-    "static/css/2.4e89ce74.chunk.css": "/Sputnik-App/static/css/2.4e89ce74.chunk.css",
-    "static/js/2.d71d2d62.chunk.js": "/Sputnik-App/static/js/2.d71d2d62.chunk.js",
-    "static/js/2.d71d2d62.chunk.js.map": "/Sputnik-App/static/js/2.d71d2d62.chunk.js.map",
-    "index.html": "/Sputnik-App/index.html",
-    "precache-manifest.a668e0ae4a5074fd7e0af07bbecf84ee.js": "/Sputnik-App/precache-manifest.a668e0ae4a5074fd7e0af07bbecf84ee.js",
-    "service-worker.js": "/Sputnik-App/service-worker.js",
-    "static/css/2.4e89ce74.chunk.css.map": "/Sputnik-App/static/css/2.4e89ce74.chunk.css.map",
-    "static/css/main.981f7211.chunk.css.map": "/Sputnik-App/static/css/main.981f7211.chunk.css.map",
-    "static/media/persik.png": "/Sputnik-App/static/media/persik.4e1ec840.png"
+    "main.css": "/Sputnik-App/mini-app/static/css/main.981f7211.chunk.css",
+    "main.js": "/Sputnik-App/mini-app/static/js/main.b052bcc3.chunk.js",
+    "main.js.map": "/Sputnik-App/mini-app/static/js/main.b052bcc3.chunk.js.map",
+    "runtime-main.js": "/Sputnik-App/mini-app/static/js/runtime-main.84941036.js",
+    "runtime-main.js.map": "/Sputnik-App/mini-app/static/js/runtime-main.84941036.js.map",
+    "static/css/2.4e89ce74.chunk.css": "/Sputnik-App/mini-app/static/css/2.4e89ce74.chunk.css",
+    "static/js/2.73e9501e.chunk.js": "/Sputnik-App/mini-app/static/js/2.73e9501e.chunk.js",
+    "static/js/2.73e9501e.chunk.js.map": "/Sputnik-App/mini-app/static/js/2.73e9501e.chunk.js.map",
+    "index.html": "/Sputnik-App/mini-app/index.html",
+    "precache-manifest.9d5a037673aaaa0c277d6ed9a9e788d7.js": "/Sputnik-App/mini-app/precache-manifest.9d5a037673aaaa0c277d6ed9a9e788d7.js",
+    "service-worker.js": "/Sputnik-App/mini-app/service-worker.js",
+    "static/css/2.4e89ce74.chunk.css.map": "/Sputnik-App/mini-app/static/css/2.4e89ce74.chunk.css.map",
+    "static/css/main.981f7211.chunk.css.map": "/Sputnik-App/mini-app/static/css/main.981f7211.chunk.css.map",
+    "static/media/persik.png": "/Sputnik-App/mini-app/static/media/persik.4e1ec840.png"
   }
 }
