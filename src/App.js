@@ -1,11 +1,18 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import connect from '@vkontakte/vk-connect';
 import View from '@vkontakte/vkui/dist/components/View/View';
 import Alert from '@vkontakte/vkui/dist/components/Alert/Alert';
 
 import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
+=======
+import React from 'react';
+>>>>>>> Events and Questionnaire Templates
 import '@vkontakte/vkui/dist/vkui.css';
+import { View, Panel, PanelHeader, FormLayout, Radio, InfoRow, Div, Group, List, Cell,
+    Input, Checkbox, Button, Select, FormLayoutGroup, Textarea, Link } from '@vkontakte/vkui';
 
+<<<<<<< HEAD
 import Home from './panels/Home';
 import Event from './panels/Event';
 
@@ -86,6 +93,80 @@ const App = () => {
 		</View>
 	);
 };
+
+//----------------Questionnaire---------------------
+class Questionnaire extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            first_name: '',
+            last_name: '',
+            father_name: ''
+        }
+    }
+
+    onChange(e) {
+        const { name, value } = e.currentTarget;
+        this.setState({ [name]: value });
+    }
+
+    render() {
+         return (
+            <View activePanel="new-user">
+                <Panel id="new-user" theme="white">
+                    <PanelHeader>Анкета волонтёра</PanelHeader>
+                    <FormLayout>
+                        <Input top="Фамилия" name='first_name' onChange={this.onChange} />
+                        <Input top="Имя" name='last_name' onChange={this.onChange} />
+                        <Input top="Отчество" name='first_name' onChange={this.onChange} />
+
+                        <Div><InfoRow title='Дата рождения'>20 июня 1999</InfoRow></Div>
+
+                        <Select top="Пол" placeholder="Выберите пол">
+                            <option value="m">Мужской</option>
+                            <option value="f">Женский</option>
+                        </Select>
+
+                        <Input
+                            type="email"
+                            top="E-mail"
+                            name="email"
+                        />
+
+                        <Input top='Телефон'/>
+
+                        <Input top='Место учёбы/работы'/>
+                        <Input top='Специальность'/>
+                        <Input top='Языки' />
+
+                        <Textarea top='Опыт волонтёрской деятельности'/>
+                        <Textarea top='Опыт работы с детьми'/>
+                        <Textarea top='Дополнительные навыки'/>
+                        <Textarea top='Ожидания'/>
+                        <Textarea top='Медицинские противопоказания'/>
+                        <Textarea top='Предпочтения в еде'/>
+                        <Textarea top='Откуда Вы о нас узнали?'/>
+
+                        <Select top="Размер одежды" placeholder="Выберите размер одежды">
+                            <option value="xs">XS</option>
+                            <option value="s">S</option>
+                            <option value="m">M</option>
+                            <option value="l">L</option>
+                            <option value="xl">XL</option>
+                            <option value="xxl">XXL</option>
+                        </Select>
+
+                        <Checkbox>Согласны ли Вы на получение рассылки?</Checkbox>
+
+                        <Button size="xl">Отправить анкету</Button>
+                    </FormLayout>
+                </Panel>
+            </View>
+        );
+    }
+}
+
 
 export default App;
 
