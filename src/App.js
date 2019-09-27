@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import connect from '@vkontakte/vk-connect';
 import View from '@vkontakte/vkui/dist/components/View/View';
 import Alert from '@vkontakte/vkui/dist/components/Alert/Alert';
+
 import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
 import '@vkontakte/vkui/dist/vkui.css';
 
@@ -55,7 +56,7 @@ const App = () => {
 
 	const closePopout = () => {
 		setPopout(null);
-	}
+	};
 
 	const alert = e => {
 		setPopout(
@@ -76,7 +77,7 @@ const App = () => {
 			<p>Вы уверены, что хотите лишить пользователя права на модерацию контента?</p>
 		  </Alert>
 		);
-	}
+	};
 
 	return (
 		<View activePanel={activePanel} popout={popout} >
@@ -84,7 +85,7 @@ const App = () => {
 			<Event id='event' event={selectedEvent} go={go} />
 		</View>
 	);
-}
+};
 
 export default App;
 
