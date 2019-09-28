@@ -9,14 +9,19 @@ import { Panel, PanelHeader } from '@vkontakte/vkui';
 const Home = ({ id, go, alert, fetchedUser, token }) => {
 	const [groups, setGroups] = useState(null);
 	const [actualEvents, setActualEvents] = useState([]);
+	const [pastEvents, setPastEvents] = useState([]);
 
 	useEffect(() => {
-		async function getActualEvents() {
-			const resp = await fetch(`https://demo11.alpha.vkhackathon.com:433/api/events/getActualEvents?auth=oX5n!E2i.VpWpHeo8E6F0q&user_id=${fetchedUser.id}`, {
+		async function getActualEvents(method, setEvents) {
+			const resp = await fetch(`https://demo11.alpha.vkhackathon.com:433/api/events/${method}?auth=oX5n!E2i.VpWpHeo8E6F0q&user_id=${fetchedUser.id}`, {
                 mode: "cors"
             });
 
 			let actualEvents = await resp.json();
+
+			if(!actualEvents) {
+				return;
+			}
 			
 			const vkIds = actualEvents.map(item => item.vk_id);
 
@@ -32,7 +37,7 @@ const Home = ({ id, go, alert, fetchedUser, token }) => {
 			});
 
 			actualEvents = vkGroups.response.map((item, i) =>  {
-				item.sputnik_id = actualEvents[i].id;
+				item.eventId = actualEvents[i].event_id;
 				item.isOpenToApply = actualEvents[i].is_open_to_apply;
 				item.isApplied = actualEvents[i].is_user_applied;
 				item.organizerId = actualEvents[i].organizer_id;
@@ -40,7 +45,7 @@ const Home = ({ id, go, alert, fetchedUser, token }) => {
 				return item;
 			})
 
-		    setActualEvents(actualEvents);
+		    setEvents(actualEvents);
 		}
 
 		async function fetchData() {
@@ -58,7 +63,10 @@ const Home = ({ id, go, alert, fetchedUser, token }) => {
 		}
 
 		fetchData();
-		if(fetchedUser) getActualEvents();
+		if(fetchedUser) {
+			getActualEvents('getActualEvents', setActualEvents);
+			getActualEvents('getMyPastEvents', setPastEvents);
+		}
 		
     }, [token, fetchedUser]);
 
@@ -72,7 +80,7 @@ const Home = ({ id, go, alert, fetchedUser, token }) => {
 			}
 			{fetchedUser && fetchedUser.admin && <AdminPanel go={go} ></AdminPanel>}
 			{groups && <EventList title="Предстоящие мероприятия" events={actualEvents} go={go} active={true} alert={alert} />}
-			{groups && <EventList title="Прошедшие мероприятия" events={groups} go={go} active={false} alert={alert} />}
+			{groups && <EventList title="Прошедшие мероприятия" events={pastEvents} go={go} active={false} alert={alert} />}
 		</Panel>
 	)
 };
