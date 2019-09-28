@@ -5,7 +5,7 @@ const EventList = ({ events, title, go, active }) => {
 	const [eventCells, setEventCells] = useState([]);
 
 	useEffect(() => {
-		setEventCells(events && events.response && events.response.map(item => {
+		setEventCells(events.map(item => {
 			return (
 				<Cell onClick={go} data-to="event" data-event={JSON.stringify({...item, active})}
 					before={<Avatar src={item.photo_100} />} description={item.activity}
