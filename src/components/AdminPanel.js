@@ -5,11 +5,11 @@ const AdminPanel = ({go}) => {
     return (
         <Group title="Панель управления">
             <List>
-                <CellButton> 
-                    Мои мероприятия
-                </CellButton>
                 <CellButton onClick={go} data-to="event-form">
                     Создать мероприятие
+                </CellButton>
+                <CellButton onClick={go} data-to="task-form">
+                    Создать задание
                 </CellButton>
             </List>
         </Group>

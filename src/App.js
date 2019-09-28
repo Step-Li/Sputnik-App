@@ -9,6 +9,7 @@ import Home from './panels/Home';
 import Event from './panels/Event';
 import EventForm from './panels/EventForm';
 import Modal from  './components/Modal';
+import TaskForm from './panels/TaskForm';
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
@@ -16,7 +17,6 @@ const App = () => {
 	const [openedEvent, setOpenedEvent] = useState(null);
 	const [selectedEvent, setSelectedEvent] = useState(null);
 	const [fetchedUser, setUser] = useState(null);
-	const [groups, setGroups] = useState(null);
 	const [token, setToken] = useState('');
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 
@@ -29,7 +29,7 @@ const App = () => {
 			}
 		});
 		async function fetchData() {
-			const user = await connect.sendPromise('VKWebAppGetUserInfo');
+			const user = await connect.sendPromise('VKWebAppGetUserInfo');	
 			const token = await connect.sendPromise("VKWebAppGetAuthToken", {"app_id": 7150436, "scope": "groups"});	
 			setUser({...user, admin: true});
 			setToken(token.access_token);
@@ -67,7 +67,9 @@ const App = () => {
 
 	const register = () => {
 		// id do smth
-		fetch(`https://demo11.alpha.vkhackathon.com:8443/api/user/getRating?auth=oX5n!E2i.VpWpHeo8E6F0q&user_id=2342343`)
+		fetch(`https://demo11.alpha.vkhackathon.com:433/api/user/getRating?auth=oX5n!E2i.VpWpHeo8E6F0q`, {
+			mode: "cors"
+		})
 			.then((res) => {
 				res.json().then((json) => {
 					showPopout(JSON.stringify(json))
@@ -104,6 +106,7 @@ const App = () => {
 			<Questionnaire id='new-user' go={go} data={fetchedUser} />
 			<Event id='event' event={openedEvent} go={go} register={register} />
 			<EventForm id='event-form' go={go} openModalSelect={openModalSelect} clearSelectedEvent={clearSelectedEvent} selectedEventJSON={selectedEvent} />
+			<TaskForm id='task-form' go={go} />
 		</View>
 	);
 };

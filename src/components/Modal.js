@@ -26,16 +26,16 @@ const Modal = ({ activeModalId, closeModal, token }) => {
       });
 
       setListEvents(groups && groups.response  && groups.response.items && groups.response.items.map((item) => {
-      return (<Cell
+        return (<Cell
           before={<Avatar src={item.photo_100} size={56} />}
-        size="xl"
+          size="xl"
           description={item.activity}
-        asideContent={
+          asideContent={
               <Button onClick={closeModal} data-selected_event={JSON.stringify(item)} size="l">Привязать</Button>
-        }
-      >
+          }
+        >
           {item.name}</Cell>)
-    }));
+      }));
 		}
 
 		fetchData();
@@ -53,7 +53,7 @@ const Modal = ({ activeModalId, closeModal, token }) => {
         header={
           <ModalPageHeader
             left={osName !== IOS && <HeaderButton onClick={closeModal} data-selected_event='null'><Icon24Cancel /></HeaderButton>}
-          >
+            >
             Мои мероприятия
           </ModalPageHeader>
         }>
