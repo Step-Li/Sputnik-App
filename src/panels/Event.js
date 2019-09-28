@@ -24,7 +24,7 @@ const Event = ({ event, go, id, register }) => {
                     {osName === IOS ? <Icon28ChevronBack /> : <Icon24Back />}
                 </HeaderButton>}
             >
-                Запись на мероприятие
+                {eventData.active ? 'Запись на мероприятие' : "Описание мероприятия"}
         </PanelHeader>
             <Group>
                 <Cell
