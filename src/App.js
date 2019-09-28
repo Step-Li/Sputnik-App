@@ -65,21 +65,18 @@ const App = () => {
 		showPopout(e.currentTarget.dataset.message);
 	}
 
-	const register = () => {
-		// id do smth
-		fetch(`https://demo11.alpha.vkhackathon.com:433/api/user/getRating?auth=oX5n!E2i.VpWpHeo8E6F0q`, {
+	async function register(e) {
+		const res = await fetch(`https://demo11.alpha.vkhackathon.com:433/api/events/applyForEvent
+		?auth=oX5n!E2i.VpWpHeo8E6F0q
+		&user_vk_id=${fetchedUser.id}
+		&event_id=${e.currentTarget.dataset.event_id}
+		&time_period_ids=${e.currentTarget.dataset.period_ids}`, {
 			mode: "cors"
-		})
-			.then((res) => {
-				res.json().then((json) => {
-					showPopout(JSON.stringify(json))
-				}).catch((e) => {
-					showPopout(JSON.stringify({"catch json": e}))	
-				})
-			}
-			).catch((err) => {
-				showPopout(JSON.stringify({"catch": err}))
-			  });
+		});
+		const status = await res.json();
+		if (status.success) {
+			showPopout("Вы успешно зарегистрировались");
+		}
 	}
 
 	const openModalSelect = e => {
