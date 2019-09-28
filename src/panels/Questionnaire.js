@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
 import {
     platform,
@@ -14,23 +14,25 @@ import {
 } from "@vkontakte/vkui";
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
+import connect from "@vkontakte/vk-connect";
 
 const osName = platform();
 
-const Questionnaire = ({id, go}) => {
-        const state = {
-            last_name: 'Тимохов',
-            first_name: 'Виктор',
-            father_name: 'Викторович',
-            birth_date: '20 июня 1999',
-            sex: 'm',
-            email: 'viktor-timohov@mail.ru',
-            phone: '+79113350200',
-            occupation: 'СПбГУ',
-            languages: ['Русский', 'English', 'Svenska']
-        };
+const Questionnaire = ({id, go, data}) => {
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
 
-        return (
+    useEffect(() => {
+        async function fetchData() {
+            const phone= await connect.sendPromise('VKWebAppGetPhoneNumber');
+            const email = await connect.sendPromise('VKWebAppGetEmail');
+            setPhone(phone);
+            setEmail(email);
+        }
+        fetchData();
+    }, []);
+
+    return (
             <Panel id={id} theme="white">
                 <PanelHeader
                     left={<HeaderButton onClick={go} data-to="home">
@@ -41,19 +43,19 @@ const Questionnaire = ({id, go}) => {
                 </PanelHeader>
                 <FormLayout>
                     <Input top="Фамилия" name='last_name'
-                           defaultValue={state.last_name}
+                           defaultValue={data.last_name}
                     />
                     <Input top="Имя" name='first_name'
-                           defaultValue={state.first_name}
+                           defaultValue={data.first_name}
                     />
-                    <Input top="Отчество" name='first_name'
-                           defaultValue={state.father_name}
-                    />
+                    <Input top="Отчество" name='first_name' />
                     <Input top="Дата рождения" name='birth_date'
-                           defaultValue={state.birth_date}
+                           defaultValue={data.bdate}
                     />
 
-                    <Select top="Пол" placeholder="Выберите пол" defaultValue='m'>
+                    <Select top="Пол" placeholder="Выберите пол"
+                            defaultValue={data.sex === 2 ? 'm' :(data.sex === 1 ? 'f' : null)}
+                    >
                         <option value="m">Мужской</option>
                         <option value="f">Женский</option>
                     </Select>
@@ -62,14 +64,14 @@ const Questionnaire = ({id, go}) => {
                         type="email"
                         top="E-mail"
                         name="email"
-                        defaultValue={state.email}
+                        defaultValue={email.email}
                     />
 
-                    <Input top='Телефон' defaultValue={state.phone}/>
+                    <Input top='Телефон' defaultValue={phone.phone_number}/>
 
-                    <Input top='Место учёбы/работы' defaultValue={state.occupation}/>
+                    <Input top='Место учёбы/работы'/>
                     <Input top='Специальность'/>
-                    <Input top='Языки' defaultValue={state.languages.join(', ')}/>
+                    <Input top='Языки' />
 
                     <Textarea top='Опыт волонтёрской деятельности'/>
                     <Textarea top='Опыт работы с детьми'/>
@@ -77,7 +79,7 @@ const Questionnaire = ({id, go}) => {
                     <Textarea top='Ожидания'/>
                     <Textarea top='Медицинские противопоказания'/>
                     <Textarea top='Предпочтения в еде'/>
-                    <Textarea top='Откуда Вы о нас узнали?'/>
+                    <Textarea top='Откуда Вы о нас узнали?' />
 
                     <Select top="Размер одежды" placeholder="Выберите размер одежды">
                         <option value="xs">XS</option>
@@ -94,6 +96,6 @@ const Questionnaire = ({id, go}) => {
                 </FormLayout>
             </Panel>
         );
-}
+};
 
 export default Questionnaire;

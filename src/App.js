@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 import connect from '@vkontakte/vk-connect';
 import '@vkontakte/vkui/dist/vkui.css';
-import { View, Alert } from '@vkontakte/vkui';
+import { View, Alert, Div } from '@vkontakte/vkui';
 import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
 
 import Questionnaire from "./panels/Questionnaire";
@@ -83,7 +83,7 @@ const App = () => {
 		<View activePanel={activePanel} popout={popout} >
 			<Home id='home' fetchedUser={fetchedUser} go={go} groups={groups} alert={alert} />
 			<Event id='event' event={selectedEvent} go={go} />
-			<Questionnaire id='new-user' go={go}/>
+			<Questionnaire id='new-user' go={go} data={fetchedUser} />
 		</View>
 	);
 };
