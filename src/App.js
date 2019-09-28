@@ -57,32 +57,42 @@ const App = () => {
 		setPopout(null);
 	};
 
-	const alert = e => {
+	const showPopout = (message) => {
 		setPopout(
 			<Alert
 			actionsLayout="vertical"
-			actions={[{
-			  title: 'id',
-			  autoclose: true,
-			  style: 'destructive'
-			}, {
-			  title: 'Отмена',
-			  autoclose: true,
-			  style: 'cancel'
-			}]}
 			onClose={closePopout}
 		  >
-			<h2>Подтвердите действие</h2>
-			<p>Вы уверены, что хотите лишить пользователя права на модерацию контента?</p>
+			<h2>{message}</h2>
 		  </Alert>
 		);
 	};
 
+	const alert = e => {
+		showPopout(e.currentTarget.dataset.message);
+	}
+
+	const register = () => {
+		// id do smth
+		console.log(token);
+		fetch(`https://demo11.alpha.vkhackathon.com:8443/api/user/getRating?auth=oX5n!E2i.VpWpHeo8E6F0q&user_id=2342343`)
+			.then((res) => {
+				res.json().then((json) => {
+					showPopout(JSON.stringify(json))
+				}).catch((e) => {
+					showPopout(JSON.stringify({"catch json": e}))	
+				})
+			}
+			).catch((err) => {
+				showPopout(JSON.stringify({"catch": err}))
+			  });
+	}
+
 	return (
 		<View activePanel={activePanel} popout={popout} >
 			<Home id='home' fetchedUser={fetchedUser} go={go} groups={groups} alert={alert} />
-			<Event id='event' event={selectedEvent} go={go} />
 			<Questionnaire id='new-user' go={go} data={fetchedUser} />
+			<Event id='event' event={selectedEvent} go={go} register={register} />
 		</View>
 	);
 };

@@ -10,7 +10,7 @@ import { platform, IOS, Group,
 } from '@vkontakte/vkui';
 const osName = platform();
 
-const Event = ({ event, go, id, active }) => {
+const Event = ({ event, go, id, register }) => {
     const [eventData, setEventData] = useState({});
 
     useEffect(() => {
@@ -55,7 +55,7 @@ const Event = ({ event, go, id, active }) => {
                             <Checkbox>15:00 - 18:00</Checkbox>
                             <Checkbox>18:00 - 21:00</Checkbox>
                         </FormLayoutGroup>
-                        <Button>Записаться</Button>
+                        <Button onClick={register} data-id={eventData.id} >Записаться</Button>
                     </FormLayout>}
 
                 </List>
