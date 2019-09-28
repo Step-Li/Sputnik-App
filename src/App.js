@@ -30,20 +30,9 @@ const App = () => {
 		});
 		async function fetchData() {
 			const user = await connect.sendPromise('VKWebAppGetUserInfo');
-			const token = await connect.sendPromise("VKWebAppGetAuthToken", {"app_id": 7150523, "scope": "groups"});
-			const groups = await connect.sendPromise("VKWebAppCallAPIMethod", {
-				"method": "groups.getById",
-				"request_id": "groups_from_base",
-				"params": {
-					"v":"5.101",
-					"group_ids": "gagadnd,210,324,43545,43452,5656,13",
-					"fields": "activity,photo_100,place,description,start_date,finish_date,photo_200",
-					"access_token": token.access_token
-				}
-			});
+			const token = await connect.sendPromise("VKWebAppGetAuthToken", {"app_id": 7150436, "scope": "groups"});	
 			setUser({...user, admin: true});
-			setGroups(groups);
-			setToken(token);
+			setToken(token.access_token);
 			setPopout(null);
 		}
 
@@ -95,6 +84,10 @@ const App = () => {
 		setActiveModalPage(e.currentTarget.dataset.modal_id);
 	}
 
+	const clearSelectedEvent = () => {
+		setSelectedEvent(null);
+	}
+
 	const closeModal = e => {
 		if (e && e.currentTarget.dataset.selected_event) {
 			setSelectedEvent(e.currentTarget.dataset.selected_event);
@@ -103,11 +96,14 @@ const App = () => {
 	}
 
 	return (
-		<View activePanel={activePanel} popout={popout} modal={<Modal eventsList={groups} closeModal={closeModal} activeModalId={activeModalPage}></Modal>}>
-			<Home id='home' fetchedUser={fetchedUser} go={go} groups={groups} alert={alert} />
+		<View activePanel={activePanel} popout={popout} 
+			modal={
+				<Modal token={token} closeModal={closeModal} activeModalId={activeModalPage}></Modal>
+			}>
+			<Home id='home' go={go} alert={alert} fetchedUser={fetchedUser} token={token} />
 			<Questionnaire id='new-user' go={go} data={fetchedUser} />
 			<Event id='event' event={openedEvent} go={go} register={register} />
-			<EventForm id='event-form' go={go} openModalSelect={openModalSelect} selectedEventId={selectedEvent} />
+			<EventForm id='event-form' go={go} openModalSelect={openModalSelect} clearSelectedEvent={clearSelectedEvent} selectedEventJSON={selectedEvent} />
 		</View>
 	);
 };

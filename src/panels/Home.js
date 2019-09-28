@@ -1,11 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
+import connect from '@vkontakte/vk-connect';
 import EventList from '../components/EventList';
 import Profile from "../components/Profile";
 import AdminPanel from '../components/AdminPanel';
 
 import { Panel, PanelHeader } from '@vkontakte/vkui';
 
-const Home = ({ id, go, fetchedUser, groups, alert }) => {
+const Home = ({ id, go, alert, fetchedUser, token }) => {
+	const [groups, setGroups] = useState(null);
+
+	useEffect(() => {
+		async function fetchData() {
+			const groups = await connect.sendPromise("VKWebAppCallAPIMethod", {
+				"method": "groups.getById",
+				"request_id": "groups_from_base",
+				"params": {
+					"v":"5.101",
+					"group_ids": "gagadnd,210,324,43545,43452,5656,13",
+					"fields": "activity,photo_100,place,description,start_date,finish_date,photo_200",
+					"access_token": token
+				}
+			});
+			setGroups(groups);
+		}
+
+		fetchData();
+		
+    }, [token]);
+
 	return (
 		<Panel id={id}>
 			<PanelHeader>
