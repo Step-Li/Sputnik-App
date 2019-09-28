@@ -37,7 +37,7 @@ const App = () => {
 					"access_token": token.access_token
 				}
 			});
-			setUser(user);
+			setUser({...user, admin: true});
 			setGroups(groups);
 			setToken(token);
 			setPopout(null);
