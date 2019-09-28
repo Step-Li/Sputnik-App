@@ -8,7 +8,7 @@ const AdminPanel = ({go}) => {
                 <CellButton> 
                     Мои мероприятия
                 </CellButton>
-                <CellButton>
+                <CellButton onClick={go} data-to="event-form">
                     Создать мероприятие
                 </CellButton>
             </List>
