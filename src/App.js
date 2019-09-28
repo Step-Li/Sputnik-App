@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect }  from 'react';
 import connect from '@vkontakte/vk-connect';
-import View from '@vkontakte/vkui/dist/components/View/View';
-import Alert from '@vkontakte/vkui/dist/components/Alert/Alert';
-import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
 import '@vkontakte/vkui/dist/vkui.css';
+import { View, Alert, Div } from '@vkontakte/vkui';
+import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
 
+import Questionnaire from "./panels/Questionnaire";
 import Home from './panels/Home';
 import Event from './panels/Event';
 
@@ -26,7 +26,7 @@ const App = () => {
 		});
 		async function fetchData() {
 			const user = await connect.sendPromise('VKWebAppGetUserInfo');
-			const token = await connect.sendPromise("VKWebAppGetAuthToken", {"app_id": 7150436, "scope": "groups"});
+			const token = await connect.sendPromise("VKWebAppGetAuthToken", {"app_id": 7150523, "scope": "groups"});
 			const groups = await connect.sendPromise("VKWebAppCallAPIMethod", {
 				"method": "groups.getById",
 				"request_id": "groups_from_base",
@@ -55,7 +55,7 @@ const App = () => {
 
 	const closePopout = () => {
 		setPopout(null);
-	}
+	};
 
 	const alert = e => {
 		setPopout(
@@ -76,15 +76,16 @@ const App = () => {
 			<p>Вы уверены, что хотите лишить пользователя права на модерацию контента?</p>
 		  </Alert>
 		);
-	}
+	};
 
 	return (
 		<View activePanel={activePanel} popout={popout} >
 			<Home id='home' fetchedUser={fetchedUser} go={go} groups={groups} alert={alert} />
 			<Event id='event' event={selectedEvent} go={go} />
+			<Questionnaire id='new-user' go={go} data={fetchedUser} />
 		</View>
 	);
-}
+};
 
 export default App;
 
