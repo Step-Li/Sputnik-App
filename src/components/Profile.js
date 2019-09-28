@@ -1,9 +1,9 @@
 import React from 'react';
-import { Group, Cell, Div } from '@vkontakte/vkui';
+import { Group, Cell, Div, Avatar } from '@vkontakte/vkui';
 
-const Profile = ({ fetchedUser}) => {
+const Profile = ({ fetchedUser, go}) => {
 	return (
-		<Group title="Мой профиль">
+		<Group title="Мой профиль" onClick={go} data-to="new-user">
 			<Cell
 				before={fetchedUser.photo_200 ? <Avatar src={fetchedUser.photo_200}/> : null}
 				description={fetchedUser.city && fetchedUser.city.title ? fetchedUser.city.title : ''}

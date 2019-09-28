@@ -1,12 +1,24 @@
 import React from 'react';
 import '@vkontakte/vkui/dist/vkui.css';
-import {Button, Checkbox, FormLayout, Input, Panel, PanelHeader, Select, Textarea, View} from "@vkontakte/vkui";
+import {
+    platform,
+    Button,
+    Checkbox,
+    FormLayout,
+    HeaderButton,
+    Input, IOS,
+    Panel,
+    PanelHeader,
+    Select,
+    Textarea
+} from "@vkontakte/vkui";
+import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
+import Icon24Back from '@vkontakte/icons/dist/24/back';
 
-class Questionnaire extends React.Component {
-    constructor(props) {
-        super(props);
+const osName = platform();
 
-        this.state = {
+const Questionnaire = ({id, go}) => {
+        const state = {
             last_name: 'Тимохов',
             first_name: 'Виктор',
             father_name: 'Викторович',
@@ -16,38 +28,29 @@ class Questionnaire extends React.Component {
             phone: '+79113350200',
             occupation: 'СПбГУ',
             languages: ['Русский', 'English', 'Svenska']
-        }
-    }
+        };
 
-    onChange(e) {
-        const { name, value } = e.currentTarget;
-        this.setState({ [name]: value });
-    }
-
-    handleClick(e) {
-
-    }
-
-    render() {
         return (
-            <Panel id="new-user" theme="white">
-                <PanelHeader>Анкета волонтёра</PanelHeader>
+            <Panel id={id} theme="white">
+                <PanelHeader
+                    left={<HeaderButton onClick={go} data-to="home">
+                        {osName === IOS ? <Icon28ChevronBack /> : <Icon24Back />}
+                    </HeaderButton>}
+                >
+                    Анкета волонтёра
+                </PanelHeader>
                 <FormLayout>
                     <Input top="Фамилия" name='last_name'
-                           defaultValue={this.state.last_name}
-                           onChange={this.onChange}
+                           defaultValue={state.last_name}
                     />
                     <Input top="Имя" name='first_name'
-                           defaultValue={this.state.first_name}
-                           onChange={this.onChange}
+                           defaultValue={state.first_name}
                     />
                     <Input top="Отчество" name='first_name'
-                           defaultValue={this.state.father_name}
-                           onChange={this.onChange}
+                           defaultValue={state.father_name}
                     />
                     <Input top="Дата рождения" name='birth_date'
-                           defaultValue={this.state.birth_date}
-                           onChange={this.onChange}
+                           defaultValue={state.birth_date}
                     />
 
                     <Select top="Пол" placeholder="Выберите пол" defaultValue='m'>
@@ -59,14 +62,14 @@ class Questionnaire extends React.Component {
                         type="email"
                         top="E-mail"
                         name="email"
-                        defaultValue={this.state.email}
+                        defaultValue={state.email}
                     />
 
-                    <Input top='Телефон' defaultValue={this.state.phone}/>
+                    <Input top='Телефон' defaultValue={state.phone}/>
 
-                    <Input top='Место учёбы/работы' defaultValue={this.state.occupation}/>
+                    <Input top='Место учёбы/работы' defaultValue={state.occupation}/>
                     <Input top='Специальность'/>
-                    <Input top='Языки' defaultValue={this.state.languages.join(', ')}/>
+                    <Input top='Языки' defaultValue={state.languages.join(', ')}/>
 
                     <Textarea top='Опыт волонтёрской деятельности'/>
                     <Textarea top='Опыт работы с детьми'/>
@@ -91,7 +94,6 @@ class Questionnaire extends React.Component {
                 </FormLayout>
             </Panel>
         );
-    }
 }
 
 export default Questionnaire;

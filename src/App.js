@@ -1,11 +1,10 @@
-
 import React, { useState, useEffect }  from 'react';
 import connect from '@vkontakte/vk-connect';
 import '@vkontakte/vkui/dist/vkui.css';
 import { View, Alert } from '@vkontakte/vkui';
 import ScreenSpinner from '@vkontakte/vkui/dist/components/ScreenSpinner/ScreenSpinner';
 
-import Questionnaire from "./components/Questionnaire";
+import Questionnaire from "./panels/Questionnaire";
 import Home from './panels/Home';
 import Event from './panels/Event';
 
@@ -27,7 +26,7 @@ const App = () => {
 		});
 		async function fetchData() {
 			const user = await connect.sendPromise('VKWebAppGetUserInfo');
-			const token = await connect.sendPromise("VKWebAppGetAuthToken", {"app_id": 7150436, "scope": "groups"});
+			const token = await connect.sendPromise("VKWebAppGetAuthToken", {"app_id": 7150523, "scope": "groups"});
 			const groups = await connect.sendPromise("VKWebAppCallAPIMethod", {
 				"method": "groups.getById",
 				"request_id": "groups_from_base",
@@ -52,6 +51,7 @@ const App = () => {
 		if (e.currentTarget.dataset.event) {
 			setSelectedEvent(e.currentTarget.dataset.event);
 		}
+		console.log(token);
 	};
 
 	const closePopout = () => {
@@ -83,7 +83,7 @@ const App = () => {
 		<View activePanel={activePanel} popout={popout} >
 			<Home id='home' fetchedUser={fetchedUser} go={go} groups={groups} alert={alert} />
 			<Event id='event' event={selectedEvent} go={go} />
-			<Questionnaire />
+			<Questionnaire id='new-user' go={go}/>
 		</View>
 	);
 };

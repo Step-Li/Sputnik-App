@@ -14,7 +14,7 @@ const EventList = ({ events, title, go, active }) => {
 				</Cell>
 			);
 		}));
-	}, [events]);
+	}, [events, go, active]);
 
 	return (
 		<Group title={title}>
