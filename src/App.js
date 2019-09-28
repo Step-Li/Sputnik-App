@@ -51,7 +51,6 @@ const App = () => {
 		if (e.currentTarget.dataset.event) {
 			setSelectedEvent(e.currentTarget.dataset.event);
 		}
-		console.log(token);
 	};
 
 	const closePopout = () => {
