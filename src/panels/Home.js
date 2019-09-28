@@ -1,8 +1,9 @@
 import React from 'react';
 import EventList from '../components/EventList';
 import Profile from "../components/Profile";
+import AdminPanel from '../components/AdminPanel';
 
-import { Div, Avatar, Cell, Panel, PanelHeader, Group } from '@vkontakte/vkui';
+import { Panel, PanelHeader } from '@vkontakte/vkui';
 
 const Home = ({ id, go, fetchedUser, groups, alert }) => {
 	return (
@@ -13,6 +14,7 @@ const Home = ({ id, go, fetchedUser, groups, alert }) => {
 			{fetchedUser &&
 				<Profile go={go} fetchedUser={fetchedUser}/>
 			}
+			{fetchedUser && fetchedUser.admin && <AdminPanel go={go} ></AdminPanel>}
 			{groups && <EventList title="Предстоящие мероприятия" events={groups} go={go} active={true} alert={alert} />}
 			{groups && <EventList title="Прошедшие мероприятия" events={groups} go={go} active={false} alert={alert} />}
 		</Panel>
