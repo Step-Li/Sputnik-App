@@ -19,17 +19,18 @@ import connect from "@vkontakte/vk-connect";
 const osName = platform();
 
 const Questionnaire = ({id, go, data}) => {
+    const [phone, setPhone] = useState('');
+    const [email, setEmail] = useState('');
     const user = {
         last_name: data.last_name, first_name: data.first_name, father_name: '',
-        bdate: data.bdate, sex: data.sex,
+        bdate: data.bdate, sex: data.sex === 2 ? '2' :(data.sex === 1 ? '1' : '0'),
         email: '', phone: '',
         occupation: '', specialty: '', languages: '',
         volExp: '', childExp: '', extraSkills: '',
         expects: '', medContrad: '', foodPref: '',
-        infoSource: '', size: ''
+        infoSource: '', size: '', isAgree: "off"
     };
-    const [phone, setPhone] = useState('');
-    const [email, setEmail] = useState('');
+
     const texts = [{name: 'volExp', text: 'Опыт волонтёрской деятельности'},
         {name: 'childExp',text: 'Опыт работы с детьми'},
         {name: 'extraSkills',text: 'Дополнительные навыки'},
@@ -40,7 +41,7 @@ const Questionnaire = ({id, go, data}) => {
 
     useEffect(() => {
         async function fetchData() {
-            const phone= await connect.sendPromise('VKWebAppGetPhoneNumber');
+            const phone = await connect.sendPromise('VKWebAppGetPhoneNumber');
             const email = await connect.sendPromise('VKWebAppGetEmail');
             setPhone(phone);
             setEmail(email);
@@ -48,14 +49,27 @@ const Questionnaire = ({id, go, data}) => {
         fetchData();
     }, []);
 
-    const handleClick = () => {
-
-    };
-
     const onChange = (e) => {
         const { name, value } = e.currentTarget;
         user[name] = value;
     };
+
+    async function sendData() {
+        return ( await fetch(
+            `https://demo11.alpha.vkhackathon.com:433/api/user/Profile?
+                    auth=oX5n!E2i.VpWpHeo8E6F0q&vk_id=${data.id}&surname=${user.last_name}
+                    &first_name=${user.first_name}&second_name=${user.father_name}
+                    &birthday=${user.bdate}&sex=${user.sex}&email=${user.email ? user.email : email.email}
+                    &phone=${user.phone ? user.phone : phone.phone_number}
+                    &occupation=${user.occupation}&langs=${user.languages}
+                    &volunteer_experience=${user.volExp}&children_work_experience=${user.childExp}
+                    &skills=${user.extraSkills}&expectations=${user.expects}
+                    &medical_contraindications=${user.medContrad}&specialty=${user.specialty}
+                    &food_preferences=${user.foodPref}&clothes_size=${user.size}
+                    &information_source=${user.infoSource}
+                    &mailing_agreement=${"true" ? user.isAgree === "on" : "false"}`,
+            {method: 'POST'}))
+    }
 
     return (
             <Panel id={id} theme="white">
@@ -68,65 +82,64 @@ const Questionnaire = ({id, go, data}) => {
                 </PanelHeader>
                 <FormLayout name='new-volunteer'>
                     <Input top="Фамилия" name='last_name'
-                           onChange={() => onChange()}
-                           value={user.last_name}
+                           onChange={onChange}
+                           defaultValue={user.last_name}
                     />
                     <Input top="Имя" name='first_name'
-                           onChange={() => onChange()}
-                           value={user.first_name}
+                           onChange={onChange}
+                           defaultValue={user.first_name}
                     />
                     <Input top="Отчество" name='father_name'
-                           onChange={() => onChange()}
-                           value={user.father_name}
+                           onChange={onChange}
+                           defaultValue={user.father_name}
                     />
                     <Input top="Дата рождения" name='bdate'
-                           onChange={() => onChange()}
-                           value={user.bdate}
+                           onChange={onChange}
+                           defaultValue={user.bdate}
                     />
 
                     <Select top="Пол" placeholder="Выберите пол" name="sex"
-                            value={user.sex === 2 ? 'm' :(user.sex === 1 ? 'f' : null)}
-                            onChange={() => onChange()}
+                            defaultValue={user.sex}
+                            onChange={onChange}
                     >
-                        <option value="m">Мужской</option>
-                        <option value="f">Женский</option>
+                        <option value="2">Мужской</option>
+                        <option value="1">Женский</option>
                     </Select>
 
                     <Input type="email" top="E-mail" name="email"
-                           onChange={() => onChange()}
-                           name="email" value={email.email}
+                           onChange={onChange}
+                           defaultValue={email.email}
                     />
 
-                    <Input top='Телефон' name="phone"
-                           onChange={() => onChange()}
-                           value={phone.phone_number}
+                    <Input type="tel" top='Телефон' name="phone"
+                           onChange={onChange}
+                           defaultValue={phone.phone_number}
                     />
 
                     <Input top='Место учёбы/работы' name="occupation"
-                           onChange={() => onChange()}
-                           value={user.occupation}
+                           onChange={onChange}
+                           defaultValue={user.occupation}
                     />
                     <Input top='Специальность' name="specialty"
-                           onChange={() => onChange()}
-                           value={user.specialty}
+                           onChange={onChange}
+                           defaultValue={user.specialty}
                     />
                     <Input top='Языки' name="languages"
-                           onChange={() => onChange()}
-                           value={user.languages}
+                           onChange={onChange}
+                           defaultValue={user.languages}
                     />
 
                     {texts.map(({name, text}) => (
                         <Textarea name={name} key={name} top={text}
-                                  onChange={() => onChange()}
-                                  value={user[name]}
+                                  onChange={onChange}
+                                  defaultValue={user[name]}
                         />
                     ))}
 
-
-
                     <Select top="Размер одежды" placeholder="Выберите размер одежды"
-                            onChange={() => onChange()}
-                            value={user.size}
+                            name="size"
+                            onChange={onChange}
+                            defaultValue={user.size}
                     >
                         <option value="xs">XS</option>
                         <option value="s">S</option>
@@ -136,9 +149,16 @@ const Questionnaire = ({id, go, data}) => {
                         <option value="xxl">XXL</option>
                     </Select>
 
-                    <Checkbox>Согласны ли Вы на получение рассылки?</Checkbox>
+                    <Checkbox name="isAgree"
+                              onChange={onChange}
+                    >
+                        Согласны ли Вы на получение рассылки?
+                    </Checkbox>
 
-                    <Button size="xl" onClick={handleClick()}>Отправить анкету</Button>
+                    <Button size="xl" onClick={(event) => {sendData(); go(event)}}
+                            data-to="home">
+                        Отправить анкету
+                    </Button>
                 </FormLayout>
             </Panel>
         );
