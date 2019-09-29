@@ -39,7 +39,6 @@ const Event = ({ event, go, id, register }) => {
             >
                 {eventData.active ? 'Запись на мероприятие' : "Описание мероприятия"}
             </PanelHeader>
-            {JSON.stringify(eventData)}
             {eventData.VK && eventData.VK.id && <Group>
                 <Cell
                     photo={eventData.VK.photo_200}

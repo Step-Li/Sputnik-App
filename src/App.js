@@ -18,6 +18,7 @@ const App = () => {
 	const [selectedEvent, setSelectedEvent] = useState(null);
 	const [fetchedUser, setUser] = useState(null);
 	const [token, setToken] = useState('');
+	const [periods, setPeriods] = useState([]);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 
 	useEffect(() => {
@@ -79,7 +80,7 @@ const App = () => {
 		}
 	}
 
-	const openModalSelect = e => {
+	const openModal = e => {
 		setActiveModalPage(e.currentTarget.dataset.modal_id);
 	}
 
@@ -88,8 +89,11 @@ const App = () => {
 	}
 
 	const closeModal = e => {
-		if (e && e.currentTarget.dataset.selected_event) {
+		if (e && e.currentTarget && e.currentTarget.dataset.selected_event) {
 			setSelectedEvent(e.currentTarget.dataset.selected_event);
+		}
+		if (e && e.period) {
+			setPeriods([...periods, e.period]);
 		}
 		setActiveModalPage(null);
 	}
@@ -102,7 +106,7 @@ const App = () => {
 			<Home id='home' go={go} alert={alert} fetchedUser={fetchedUser} token={token} />
 			<Questionnaire id='new-user' go={go} data={fetchedUser} />
 			<Event id='event' event={openedEvent} go={go} register={register} />
-			<EventForm id='event-form' go={go} openModalSelect={openModalSelect} clearSelectedEvent={clearSelectedEvent} selectedEventJSON={selectedEvent} />
+			<EventForm id='event-form' go={go} periodsList={periods} openModal={openModal} clearSelectedEvent={clearSelectedEvent} selectedEventJSON={selectedEvent} />
 			<TaskForm id='task-form' go={go} />
 		</View>
 	);
