@@ -18,16 +18,16 @@ const EventForm = ({ go, id, openModal, selectedEventJSON, periodsList, userId, 
     const createEvent = () => {
         async function sendData() {
             const resp = await fetch(`https://demo11.alpha.vkhackathon.com:433/api/events/createEvent
-?auth=oX5n!E2i.VpWpHeo8E6F0q&
-user_vk_id=${userId}
-vk_id=${formState.vk_id}
-name=${formState.name}
-description=${formState.description}
-weight=${formState.weight}
-date=${formState.date}
-volunteers_task=${formState.volunteers_task}
-volunteer_requirements=${formState.volunteer_requirements}
-place=${formState.place}`, {
+?auth=oX5n!E2i.VpWpHeo8E6F0q
+&user_vk_id=${userId}
+&vk_id=${formState.vk_id}
+&name=${formState.name}
+&description=${formState.description}
+&weight=${formState.weight}
+&date=${formState.date}
+&volunteers_task=${formState.volunteers_task}
+&volunteer_requirements=${formState.volunteer_requirements}
+&place=${formState.place}`, {
                     mode: "cors"
                 });
 
