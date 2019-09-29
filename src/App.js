@@ -108,6 +108,7 @@ const App = () => {
 			<Event id='event' event={openedEvent} go={go} register={register} />
 			<EventForm id='event-form' go={go} periodsList={periods} openModal={openModal} clearSelectedEvent={clearSelectedEvent} selectedEventJSON={selectedEvent} />
 			<TaskForm id='task-form' go={go} />
+			<OrgEvents id='org-events' go={go} user={fetchedUser} ></OrgEvents>
 		</View>
 	);
 };
