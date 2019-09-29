@@ -11,22 +11,23 @@ import {
 } from '@vkontakte/vkui';
 const osName = platform();
 
+export async function getEventDBData(event, setEventData) {
+    const resp = await fetch(`https://demo11.alpha.vkhackathon.com:433/api/events/getEvent?auth=oX5n!E2i.VpWpHeo8E6F0q&id=${event.eventId}`, {
+        mode: "cors"
+    });
+
+    const eventDB = await resp.json();
+
+    setEventData({ VK: event, ...eventDB });
+}
+
 const Event = ({ event, go, id, register }) => {
     const [eventData, setEventData] = useState({});
 
     useEffect(() => {
-        async function getEventDBData(event) {
-            const resp = await fetch(`https://demo11.alpha.vkhackathon.com:433/api/events/getEvent?auth=oX5n!E2i.VpWpHeo8E6F0q&id=${event.eventId}`, {
-                mode: "cors"
-            });
-
-            const eventDB = await resp.json();
-
-            setEventData({ VK: event, ...eventDB });
-        }
 
         const eventShort = JSON.parse(event);
-        getEventDBData(eventShort);
+        getEventDBData(eventShort, setEventData);
 
     }, [event]);
 
