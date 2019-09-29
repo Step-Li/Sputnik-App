@@ -1,18 +1,15 @@
 {
   "files": {
-    "main.css": "/sputnik-app/static/css/main.981f7211.chunk.css",
-    "main.js": "/sputnik-app/static/js/main.b052bcc3.chunk.js",
-    "main.js.map": "/sputnik-app/static/js/main.b052bcc3.chunk.js.map",
-    "runtime-main.js": "/sputnik-app/static/js/runtime-main.75da835d.js",
-    "runtime-main.js.map": "/sputnik-app/static/js/runtime-main.75da835d.js.map",
-    "static/css/2.4e89ce74.chunk.css": "/sputnik-app/static/css/2.4e89ce74.chunk.css",
-    "static/js/2.14f360b1.chunk.js": "/sputnik-app/static/js/2.14f360b1.chunk.js",
-    "static/js/2.14f360b1.chunk.js.map": "/sputnik-app/static/js/2.14f360b1.chunk.js.map",
-    "index.html": "/sputnik-app/index.html",
-    "precache-manifest.0fb1902d0fc7306c92d90fad05fbcf8c.js": "/sputnik-app/precache-manifest.0fb1902d0fc7306c92d90fad05fbcf8c.js",
-    "service-worker.js": "/sputnik-app/service-worker.js",
-    "static/css/2.4e89ce74.chunk.css.map": "/sputnik-app/static/css/2.4e89ce74.chunk.css.map",
-    "static/css/main.981f7211.chunk.css.map": "/sputnik-app/static/css/main.981f7211.chunk.css.map",
-    "static/media/persik.png": "/sputnik-app/static/media/persik.4e1ec840.png"
+    "main.js": "/Sputnik-App/static/js/main.276b0c4b.chunk.js",
+    "main.js.map": "/Sputnik-App/static/js/main.276b0c4b.chunk.js.map",
+    "runtime-main.js": "/Sputnik-App/static/js/runtime-main.8cbf0ab2.js",
+    "runtime-main.js.map": "/Sputnik-App/static/js/runtime-main.8cbf0ab2.js.map",
+    "static/css/2.4e89ce74.chunk.css": "/Sputnik-App/static/css/2.4e89ce74.chunk.css",
+    "static/js/2.294bfbf2.chunk.js": "/Sputnik-App/static/js/2.294bfbf2.chunk.js",
+    "static/js/2.294bfbf2.chunk.js.map": "/Sputnik-App/static/js/2.294bfbf2.chunk.js.map",
+    "index.html": "/Sputnik-App/index.html",
+    "precache-manifest.2d5b6c7369605b70cb43a8248c8c6d64.js": "/Sputnik-App/precache-manifest.2d5b6c7369605b70cb43a8248c8c6d64.js",
+    "service-worker.js": "/Sputnik-App/service-worker.js",
+    "static/css/2.4e89ce74.chunk.css.map": "/Sputnik-App/static/css/2.4e89ce74.chunk.css.map"
   }
 }
