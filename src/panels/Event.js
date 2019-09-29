@@ -46,7 +46,7 @@ const Event = ({ event, go, id, register }) => {
                     //todo через start_date
                     description={eventData.VK.activity}
                     bottomContent={eventData.VK.description}
-                    asideContent={<Link href={`https//vk.com/app${eventData.VK.id}`}><Button>В группу</Button></Link>}
+                    asideContent={<Link href="https//m.vk.com/totaldict" target="_blank"><Button>В группу</Button></Link>}
                     before={<Avatar src={eventData.VK.photo_200} size={56} />}
                     size="l"
                 >
