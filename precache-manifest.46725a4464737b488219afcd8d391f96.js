@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "166c8db3ae34b50d031a0b2f5044ea6c",
+    "revision": "62b23d4343ff62933d9c51a3f0840dc7",
     "url": "/Sputnik-App/index.html"
   },
   {
@@ -12,8 +12,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/Sputnik-App/static/js/2.6387820e.chunk.js"
   },
   {
-    "revision": "4aab0218e8585c6d14c8",
-    "url": "/Sputnik-App/static/js/main.5929c3dd.chunk.js"
+    "revision": "896be0acffc6532955be",
+    "url": "/Sputnik-App/static/js/main.72c97336.chunk.js"
   },
   {
     "revision": "94a294f62571ed239588",
