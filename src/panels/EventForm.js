@@ -8,12 +8,14 @@ import {
 } from '@vkontakte/vkui';
 const osName = platform();
 
-const EventForm = ({ go, id, openModalSelect, selectedEventJSON, clearSelectedEvent }) => {
+const EventForm = ({ go, id, openModal, selectedEventJSON, periodsList, clearSelectedEvent }) => {
     const [selectedEvent, setSelectedEvent] = useState([]);
+    const [periods, setPeriods] = useState([]);
 
     useEffect(() => {
         setSelectedEvent(JSON.parse(selectedEventJSON));
-    }, [selectedEventJSON]);
+        setPeriods(periodsList);
+    }, [selectedEventJSON, periodsList]);
 
     return (
         <Panel id={id}>
@@ -33,14 +35,17 @@ const EventForm = ({ go, id, openModalSelect, selectedEventJSON, clearSelectedEv
                     asideContent={<Button onClick={clearSelectedEvent} >No</Button>}
                 >
                     {selectedEvent.name}</Cell>}
-                <CellButton onClick={openModalSelect} data-modal_id='select-event'>{selectedEvent ? 'Изменить' : 'Привязать мероприятие'}</CellButton>
+                <CellButton onClick={openModal} data-modal_id='select-event'>{selectedEvent ? 'Изменить' : 'Привязать мероприятие'}</CellButton>
             </Group>
-            <FormLayout>
-                <Textarea top="Задачи волонтеров"></Textarea>
-                <FormLayoutGroup top="Временные промежутки">
-                    
-                </FormLayoutGroup>
-            </FormLayout>
+            <Group>
+                <FormLayout>
+                    <Textarea top="Задачи волонтеров"></Textarea>
+                    <FormLayoutGroup top="Временные промежутки">
+                        {JSON.stringify(periods)}
+                        <CellButton onClick={openModal} data-modal_id='add-time-period'>Добавить временной промежуток</CellButton>
+                    </FormLayoutGroup>
+                </FormLayout>
+            </Group>
         </Panel>
     )
 };
