@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/Sputnik-App/precache-manifest.2d5b6c7369605b70cb43a8248c8c6d64.js"
+  "/Sputnik-App/precache-manifest.0fb465bdd50c5d5d58fab3a5c76a35a5.js"
 );
 
 self.addEventListener('message', (event) => {
