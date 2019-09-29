@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import Icon24Camera from '@vkontakte/icons/dist/24/camera';
@@ -6,11 +6,30 @@ import Icon24Camera from '@vkontakte/icons/dist/24/camera';
 
 import {
     platform, IOS,
-    HeaderButton, Panel, PanelHeader, Button, Textarea, FormLayout, File
+    HeaderButton, Panel, PanelHeader, Button, Textarea, FormLayout, File, Div, Avatar
 } from '@vkontakte/vkui';
 const osName = platform();
 
 const TaskForm = ({ go, id }) => {
+    const [taskState, setTask] = useState({});
+
+    const sendTask = () =>  {
+        async function send() {
+            const resp = await fetch(`https://demo11.alpha.vkhackathon.com:1488/api/tasks/create?auth=oX5n!E2i.VpWpHeo8E6F0q&message=${taskState.description}`, {
+                mode: "cors"
+            });
+
+            const eventsData = await resp.json();
+        }
+
+        send();
+    }
+
+    const onChange = (e) => {
+        const { name, value } = e.currentTarget;
+        setTask({...taskState, [name]: value});
+    };
+
     return (
         <Panel id={id}>
             <PanelHeader
@@ -21,12 +40,12 @@ const TaskForm = ({ go, id }) => {
                 Создать задание
             </PanelHeader>
             <FormLayout>
-                <File top="Загрузите ваше фото" before={<Icon24Camera />} size="l">
+                <File top="Загрузите ваше фото" name="file" onChange={onChange} before={<Icon24Camera />} size="l">
                     Открыть галерею
                 </File>
-                <Textarea top='Описание задания'>
+                <Textarea name="description" onChange={onChange} top='Описание задания'>
                 </Textarea>
-                <Button>Разослать волонтерам</Button>
+                <Button onClick={sendTask}>Разослать волонтерам</Button>
             </FormLayout>
         </Panel>
     )

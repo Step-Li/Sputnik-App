@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import connect from '@vkontakte/vk-connect';
 import '@vkontakte/vkui/dist/vkui.css';
 import { View, Alert } from '@vkontakte/vkui';
@@ -8,8 +8,10 @@ import Questionnaire from "./panels/Questionnaire";
 import Home from './panels/Home';
 import Event from './panels/Event';
 import EventForm from './panels/EventForm';
-import Modal from  './components/Modal';
+import Modal from './components/Modal';
 import TaskForm from './panels/TaskForm';
+import OrgEvents from './panels/OrgEvents';
+import VolunteersList from './panels/VolunteersList';
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
@@ -18,10 +20,11 @@ const App = () => {
 	const [selectedEvent, setSelectedEvent] = useState(null);
 	const [fetchedUser, setUser] = useState(null);
 	const [token, setToken] = useState('');
+	const [periods, setPeriods] = useState([]);
 	const [popout, setPopout] = useState(<ScreenSpinner size='large' />);
 
 	useEffect(() => {
-		connect.subscribe(({ detail: { type, data }}) => {
+		connect.subscribe(({ detail: { type, data } }) => {
 			if (type === 'VKWebAppUpdateConfig') {
 				const schemeAttribute = document.createAttribute('scheme');
 				schemeAttribute.value = data.scheme ? data.scheme : 'client_light';
@@ -29,9 +32,16 @@ const App = () => {
 			}
 		});
 		async function fetchData() {
-			const user = await connect.sendPromise('VKWebAppGetUserInfo');	
-			const token = await connect.sendPromise("VKWebAppGetAuthToken", {"app_id": 7150436, "scope": "groups"});	
-			setUser({...user, admin: true});
+			const user = await connect.sendPromise('VKWebAppGetUserInfo');
+			const token = await connect.sendPromise("VKWebAppGetAuthToken", { "app_id": 7150436, "scope": "groups" });
+
+			const resp = await fetch(`https://demo11.alpha.vkhackathon.com:433/api/user/getUserStatus?auth=oX5n!E2i.VpWpHeo8E6F0q&vk_id=${user.id}`, {
+				mode: "cors"
+			});
+
+			let userStatus = await resp.json();
+
+			setUser({ ...user, admin: userStatus.user_status });
 			setToken(token.access_token);
 			setPopout(null);
 		}
@@ -53,11 +63,11 @@ const App = () => {
 	const showPopout = (message) => {
 		setPopout(
 			<Alert
-			actionsLayout="vertical"
-			onClose={closePopout}
-		  >
-			<h2>{message}</h2>
-		  </Alert>
+				actionsLayout="vertical"
+				onClose={closePopout}
+			>
+				<h2>{message}</h2>
+			</Alert>
 		);
 	};
 
@@ -71,15 +81,15 @@ const App = () => {
 		&user_vk_id=${fetchedUser.id}
 		&event_id=${e.currentTarget.dataset.event_id}
 		&time_period_ids=${e.currentTarget.dataset.period_ids}`, {
-			mode: "cors"
-		});
+				mode: "cors"
+			});
 		const status = await res.json();
 		if (status.success) {
 			showPopout("Вы успешно зарегистрировались");
 		}
 	}
 
-	const openModalSelect = e => {
+	const openModal = e => {
 		setActiveModalPage(e.currentTarget.dataset.modal_id);
 	}
 
@@ -88,22 +98,33 @@ const App = () => {
 	}
 
 	const closeModal = e => {
-		if (e && e.currentTarget.dataset.selected_event) {
+		if (e && e.currentTarget && e.currentTarget.dataset.selected_event) {
 			setSelectedEvent(e.currentTarget.dataset.selected_event);
+		}
+		if (e && e.period) {
+			setPeriods([...periods, e.period]);
 		}
 		setActiveModalPage(null);
 	}
 
 	return (
-		<View activePanel={activePanel} popout={popout} 
+		<View activePanel={activePanel} popout={popout}
 			modal={
 				<Modal token={token} closeModal={closeModal} activeModalId={activeModalPage}></Modal>
 			}>
 			<Home id='home' go={go} alert={alert} fetchedUser={fetchedUser} token={token} />
-			<Questionnaire id='new-user' go={go} data={fetchedUser} />
+			<Questionnaire id='new-user' go={go} data={fetchedUser} alert={showPopout} />
 			<Event id='event' event={openedEvent} go={go} register={register} />
-			<EventForm id='event-form' go={go} openModalSelect={openModalSelect} clearSelectedEvent={clearSelectedEvent} selectedEventJSON={selectedEvent} />
+			<EventForm id='event-form'
+				go={go}
+				periodsList={periods}
+				openModal={openModal}
+				clearSelectedEvent={clearSelectedEvent}
+				selectedEventJSON={selectedEvent}
+				userId={fetchedUser && fetchedUser.id} />
 			<TaskForm id='task-form' go={go} />
+			<OrgEvents id='org-events' go={go} user={fetchedUser} ></OrgEvents>
+			<VolunteersList id='vol-list' go={go} event={openedEvent} token={token} ></VolunteersList>
 		</View>
 	);
 };
