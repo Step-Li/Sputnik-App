@@ -5,19 +5,55 @@ import Icon16Add from '@vkontakte/icons/dist/16/add';
 import Icon16Cancel from '@vkontakte/icons/dist/16/cancel';
 
 import {
-    platform, IOS, FormLayout,
-    HeaderButton, Panel, PanelHeader, Group, CellButton, Cell, Avatar, Button, Textarea, FormLayoutGroup
+    platform, IOS, FormLayout, List, Div,
+    HeaderButton, Panel, PanelHeader, Group, CellButton, Cell, Avatar, Button, Textarea, FormLayoutGroup, Input
 } from '@vkontakte/vkui';
 const osName = platform();
 
-const EventForm = ({ go, id, openModal, selectedEventJSON, periodsList, clearSelectedEvent }) => {
-    const [selectedEvent, setSelectedEvent] = useState([]);
+const EventForm = ({ go, id, openModal, selectedEventJSON, periodsList, userId, clearSelectedEvent }) => {
+    const [selectedEvent, setSelectedEvent] = useState(null);
+    const [formState, setFormState] = useState({});
     const [periods, setPeriods] = useState([]);
 
+    const createEvent = () => {
+        async function sendData() {
+            const resp = await fetch(`https://demo11.alpha.vkhackathon.com:433/api/events/createEvent
+?auth=oX5n!E2i.VpWpHeo8E6F0q&
+user_vk_id=${userId}
+vk_id=${formState.vk_id}
+name=${formState.name}
+description=${formState.description}
+weight=${formState.weight}
+date=${formState.date}
+volunteers_task=${formState.volunteers_task}
+volunteer_requirements=${formState.volunteer_requirements}
+place=${formState.place}`, {
+                    mode: "cors"
+                });
+
+            const success = await resp.json();
+        }
+
+        sendData();
+    }
+
     useEffect(() => {
-        setSelectedEvent(JSON.parse(selectedEventJSON));
+        const event = JSON.parse(selectedEventJSON);
+        setSelectedEvent(event);
+        if (event) {
+            setFormState({ ...formState, name: event && event.name, vk_id: event.id, description: event.description })
+        }
         setPeriods(periodsList);
     }, [selectedEventJSON, periodsList]);
+
+    useEffect(() => {
+        setFormState({ ...formState, time_periods: periods.map(item => `${item.period}%${item.count}`).join('$') })
+    }, [periods])
+
+    const onChange = (e) => {
+        const { name, value } = e.currentTarget;
+        setFormState({ ...formState, [name]: value })
+    };
 
     return (
         <Panel id={id}>
@@ -41,12 +77,26 @@ const EventForm = ({ go, id, openModal, selectedEventJSON, periodsList, clearSel
             </Group>
             <Group>
                 <FormLayout>
-                    <Textarea top="Задачи волонтеров"></Textarea>
+                    {selectedEvent ? <Input top="Название мероприятия" name="name" defaultValue={selectedEvent.name} onChange={onChange}></Input> :
+                    <Input top="Название мероприятия" name="name" onChange={onChange}></Input>}
+                    <Input top="Вес мероприятия" name="weight" onChange={onChange}></Input>
+                    <Textarea top="Описание" name="description" onChange={onChange}>{"dfgdhd"}</Textarea>
+                    <Input top="Дата проведения" name="date" onChange={onChange}></Input>
+                    <Textarea top="Место проведения" name="place" onChange={onChange}></Textarea>
+                    <Textarea top="Задачи волонтеров" name="volunteers_task" onChange={onChange}></Textarea>
+                    <Textarea top="Требования к волонтерам" name="volunteer_requirements" onChange={onChange}></Textarea>
                     <FormLayoutGroup top="Временные промежутки">
-                        {JSON.stringify(periods)}
-                        <CellButton before={<Icon16Add/>} onClick={openModal} data-modal_id='add-time-period'>Добавить
+                        <Group>
+                            <List>
+                                {periods.map((item, i) => (<Cell asideContent={item.count}>{item.period}</Cell>))}
+                            </List>
+                            <CellButton before={<Icon16Add/>} onClick={openModal} data-modal_id='add-time-period'>Добавить
                             временной промежуток</CellButton>
+                        </Group>
                     </FormLayoutGroup>
+                    <Div>
+                        <Button size="xl" onClick={createEvent} level="secondary">Создать</Button>
+                    </Div>
                 </FormLayout>
             </Group>
         </Panel>
