@@ -104,7 +104,7 @@ const App = () => {
 				<Modal token={token} closeModal={closeModal} activeModalId={activeModalPage}></Modal>
 			}>
 			<Home id='home' go={go} alert={alert} fetchedUser={fetchedUser} token={token} />
-			<Questionnaire id='new-user' go={go} data={fetchedUser} />
+			<Questionnaire id='new-user' go={go} data={fetchedUser} alert={showPopout} />
 			<Event id='event' event={openedEvent} go={go} register={register} />
 			<EventForm id='event-form' go={go} periodsList={periods} openModal={openModal} clearSelectedEvent={clearSelectedEvent} selectedEventJSON={selectedEvent} />
 			<TaskForm id='task-form' go={go} />

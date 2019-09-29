@@ -18,7 +18,7 @@ import connect from "@vkontakte/vk-connect";
 
 const osName = platform();
 
-const Questionnaire = ({id, go, data}) => {
+const Questionnaire = ({id, go, data, alert}) => {
     const [phone, setPhone] = useState('');
     const [email, setEmail] = useState('');
     const user = {
@@ -55,20 +55,25 @@ const Questionnaire = ({id, go, data}) => {
     };
 
     async function sendData() {
-        return ( await fetch(
-            `https://demo11.alpha.vkhackathon.com:433/api/user/Profile?
-                    auth=oX5n!E2i.VpWpHeo8E6F0q&vk_id=${data.id}&surname=${user.last_name}
-                    &first_name=${user.first_name}&second_name=${user.father_name}
-                    &birthday=${user.bdate}&sex=${user.sex}&email=${user.email ? user.email : email.email}
-                    &phone=${user.phone ? user.phone : phone.phone_number}
-                    &occupation=${user.occupation}&langs=${user.languages}
-                    &volunteer_experience=${user.volExp}&children_work_experience=${user.childExp}
-                    &skills=${user.extraSkills}&expectations=${user.expects}
-                    &medical_contraindications=${user.medContrad}&specialty=${user.specialty}
-                    &food_preferences=${user.foodPref}&clothes_size=${user.size}
-                    &information_source=${user.infoSource}
-                    &mailing_agreement=${"true" ? user.isAgree === "on" : "false"}`,
-            {method: 'POST'}))
+        const resp = await fetch(
+            `https://demo11.alpha.vkhackathon.com:433/api/user/setProfile?auth=oX5n!E2i.VpWpHeo8E6F0q
+&vk_id=${data.id}&surname=${user.last_name}&first_name=${user.first_name}
+&second_name=${user.father_name}&birthday=${user.bdate}&sex=${user.sex}
+&email=${user.email ? user.email : email.email}&phone=${user.phone ? user.phone : phone.phone_number}
+&occupation=${user.occupation}&langs=${user.languages}&volunteer_experience=${user.volExp}
+&children_work_experience=${user.childExp}
+&skills=${user.extraSkills}&expectations=${user.expects}
+&medical_contraindications=${user.medContrad}&specialty=${user.specialty}
+&food_preferences=${user.foodPref}&clothes_size=${user.size}
+&information_source=${user.infoSource}
+&mailing_agreement=${user.isAgree === "on" ? "true" : "false"}`,
+            {mode: "cors"});
+        const json = await resp.json();
+        if(json.success) {
+            alert("Сохранено");
+        } else {
+            alert("Ошибка, попробуйте снова");
+        }
     }
 
     return (
