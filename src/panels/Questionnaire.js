@@ -32,6 +32,7 @@ const Questionnaire = ({id, go, data, alert}) => {
     };
 
     const texts = [{name: 'volExp', text: 'Опыт волонтёрской деятельности'},
+        {name: 'museum', text: 'Ваш музей'},
         {name: 'childExp',text: 'Опыт работы с детьми'},
         {name: 'extraSkills',text: 'Дополнительные навыки'},
         {name: 'expects',text: 'Ожидания'},
@@ -58,7 +59,7 @@ const Questionnaire = ({id, go, data, alert}) => {
         const resp = await fetch(
             `https://demo11.alpha.vkhackathon.com:433/api/user/setProfile?auth=oX5n!E2i.VpWpHeo8E6F0q
 &vk_id=${data.id}&surname=${user.last_name}&first_name=${user.first_name}
-&second_name=${user.father_name}&birthday=${user.bdate}&sex=${user.sex}
+&second_name=${user.father_name}&birthday=${user.bdate}&sex=${user.sex}&museum=${user.museum}
 &email=${user.email ? user.email : email.email}&phone=${user.phone ? user.phone : phone.phone_number}
 &occupation=${user.occupation}&langs=${user.languages}&volunteer_experience=${user.volExp}
 &children_work_experience=${user.childExp}
