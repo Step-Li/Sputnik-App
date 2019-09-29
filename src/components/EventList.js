@@ -8,7 +8,8 @@ const EventList = ({ events, title, go, active }) => {
 		setEventCells(events.map(item => {
 			if(!active) {
 				return  (<Cell onClick={go} data-to="event" data-event={JSON.stringify(item)}
-							before={<Avatar src={item.photo_100} />} description={item.activity}>
+							before={<Avatar src={item.photo_100} />} description={item.activity || item.date}
+							>
 							{item.name}
 						</Cell>)
 			}
@@ -18,12 +19,12 @@ const EventList = ({ events, title, go, active }) => {
 
 			return isActive ?
 				(<Cell onClick={go} data-to="event" data-event={JSON.stringify({...item, active})}
-					before={<Avatar src={item.photo_100} />} description={item.activity}
+					before={<Avatar src={item.photo_100} />} description={item.activity || item.date}
 					asideContent={<Button onClick={alert} >Записаться</Button>} >
 					{item.name}
 				</Cell>) : (
 					<Cell onClick={go} data-to="event" data-event={JSON.stringify(item)}
-					before={<Avatar src={item.photo_100} />} description={item.activity}
+					before={<Avatar src={item.photo_100} />} description={item.activity || item.date}
 					asideContent={ isApplied ? <Div>Вы записаны</Div> : <Div>Запись закрыта</Div>} >
 					{item.name}
 				</Cell>

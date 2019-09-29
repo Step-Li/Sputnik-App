@@ -74,8 +74,6 @@ place=${formState.place}`, {
                 <CellButton onClick={openModal} data-modal_id='select-event'>{selectedEvent ? 'Изменить' : 'Привязать мероприятие'}</CellButton>
             </Group>
             <Group>
-
-                <Div>{JSON.stringify(formState)}</Div>
                 <FormLayout>
                     {selectedEvent ? <Input top="Название мероприятия" name="name" defaultValue={selectedEvent.name} onChange={onChange}></Input> :
                     <Input top="Название мероприятия" name="name" onChange={onChange}></Input>}
