@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
+import Icon16Add from '@vkontakte/icons/dist/16/add';
+import Icon16Cancel from '@vkontakte/icons/dist/16/cancel';
 
 import {
     platform, IOS, FormLayout, List, Div,
@@ -68,7 +70,7 @@ place=${formState.place}`, {
                     before={<Avatar src={selectedEvent.photo_100} size={56} />}
                     size="xl"
                     description={selectedEvent.activity}
-                    asideContent={<Button onClick={clearSelectedEvent} >No</Button>}
+                    asideContent={<Button before={<Icon16Cancel/>} level="destructive" onClick={clearSelectedEvent}>Удалить</Button>}
                 >
                     {selectedEvent.name}</Cell>}
                 <CellButton onClick={openModal} data-modal_id='select-event'>{selectedEvent ? 'Изменить' : 'Привязать мероприятие'}</CellButton>
@@ -88,7 +90,8 @@ place=${formState.place}`, {
                             <List>
                                 {periods.map((item, i) => (<Cell asideContent={item.count}>{item.period}</Cell>))}
                             </List>
-                            <CellButton onClick={openModal} data-modal_id='add-time-period'>Добавить временной промежуток</CellButton>
+                            <CellButton before={<Icon16Add/>} onClick={openModal} data-modal_id='add-time-period'>Добавить
+                            временной промежуток</CellButton>
                         </Group>
                     </FormLayoutGroup>
                     <Div>
