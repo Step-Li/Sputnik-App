@@ -1,16 +1,16 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect } from 'react';
 import Icon28ChevronBack from '@vkontakte/icons/dist/28/chevron_back';
 import Icon24Back from '@vkontakte/icons/dist/24/back';
 import EventList from '../components/EventList';
 import {
     platform, IOS,
-    HeaderButton, Panel, PanelHeader, 
+    HeaderButton, Panel, PanelHeader, Cell, Avatar
 } from '@vkontakte/vkui';
 
 const osName = platform();
 
 
-const OrgEvents = ({id, go, user}) => {
+const OrgEvents = ({ id, go, user }) => {
     const [events, setEvents] = useState([]);
 
     useEffect(() => {
@@ -21,7 +21,7 @@ const OrgEvents = ({id, go, user}) => {
 
             const eventsData = await resp.json();
 
-		    setEvents(eventsData);
+            setEvents(eventsData);
         }
 
         getOrgEvents();
@@ -30,14 +30,21 @@ const OrgEvents = ({id, go, user}) => {
     return (
         <Panel id={id}>
             <PanelHeader
-            left={<HeaderButton onClick={go} data-to="home">
-                {osName === IOS ? <Icon28ChevronBack /> : <Icon24Back />}
-            </HeaderButton>}
-        >
-            Мои мероприятия
+                left={<HeaderButton onClick={go} data-to="home">
+                    {osName === IOS ? <Icon28ChevronBack /> : <Icon24Back />}
+                </HeaderButton>}
+            >
+                Мои мероприятия
         </PanelHeader>
-        {JSON.stringify(events)}
-		</Panel>
+            {events && events.map(item => {
+                item.id = item.vk_id;
+                return (<Cell onClick={go} data-to="vol-list" data-event={JSON.stringify(item)}
+                    before={<Avatar src={item.photo_100} />} description={item.activity || item.date}
+                >
+                    {item.name}
+                </Cell>);
+            })}
+        </Panel>
     );
 }
 

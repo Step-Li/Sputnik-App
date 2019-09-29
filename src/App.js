@@ -11,6 +11,7 @@ import EventForm from './panels/EventForm';
 import Modal from './components/Modal';
 import TaskForm from './panels/TaskForm';
 import OrgEvents from './panels/OrgEvents';
+import VolunteersList from './panels/VolunteersList';
 
 const App = () => {
 	const [activePanel, setActivePanel] = useState('home');
@@ -33,7 +34,14 @@ const App = () => {
 		async function fetchData() {
 			const user = await connect.sendPromise('VKWebAppGetUserInfo');
 			const token = await connect.sendPromise("VKWebAppGetAuthToken", { "app_id": 7150436, "scope": "groups" });
-			setUser({ ...user, admin: true });
+
+			const resp = await fetch(`https://demo11.alpha.vkhackathon.com:433/api/user/getUserStatus?auth=oX5n!E2i.VpWpHeo8E6F0q&vk_id=${user.id}`, {
+				mode: "cors"
+			});
+
+			let userStatus = await resp.json();
+
+			setUser({ ...user, admin: userStatus.user_status });
 			setToken(token.access_token);
 			setPopout(null);
 		}
@@ -113,9 +121,10 @@ const App = () => {
 				openModal={openModal}
 				clearSelectedEvent={clearSelectedEvent}
 				selectedEventJSON={selectedEvent}
-				userId={fetchedUser && fetchedUser.id}/>
+				userId={fetchedUser && fetchedUser.id} />
 			<TaskForm id='task-form' go={go} />
 			<OrgEvents id='org-events' go={go} user={fetchedUser} ></OrgEvents>
+			<VolunteersList id='vol-list' go={go} event={openedEvent} token={token} ></VolunteersList>
 		</View>
 	);
 };
