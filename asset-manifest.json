@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.js": "/Sputnik-App/static/js/main.8226874c.chunk.js",
-    "main.js.map": "/Sputnik-App/static/js/main.8226874c.chunk.js.map",
+    "main.js": "/Sputnik-App/static/js/main.5929c3dd.chunk.js",
+    "main.js.map": "/Sputnik-App/static/js/main.5929c3dd.chunk.js.map",
     "runtime-main.js": "/Sputnik-App/static/js/runtime-main.8cbf0ab2.js",
     "runtime-main.js.map": "/Sputnik-App/static/js/runtime-main.8cbf0ab2.js.map",
     "static/css/2.4e89ce74.chunk.css": "/Sputnik-App/static/css/2.4e89ce74.chunk.css",
     "static/js/2.6387820e.chunk.js": "/Sputnik-App/static/js/2.6387820e.chunk.js",
     "static/js/2.6387820e.chunk.js.map": "/Sputnik-App/static/js/2.6387820e.chunk.js.map",
     "index.html": "/Sputnik-App/index.html",
-    "precache-manifest.c7ec4493cfb2ec275bb25f802167605c.js": "/Sputnik-App/precache-manifest.c7ec4493cfb2ec275bb25f802167605c.js",
+    "precache-manifest.d8c9a24af14f30ba9b75fb3b30ef09c0.js": "/Sputnik-App/precache-manifest.d8c9a24af14f30ba9b75fb3b30ef09c0.js",
     "service-worker.js": "/Sputnik-App/service-worker.js",
     "static/css/2.4e89ce74.chunk.css.map": "/Sputnik-App/static/css/2.4e89ce74.chunk.css.map"
   }
